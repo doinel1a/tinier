@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-medium transition-colors;
+    }
+
+    h1 {
+        @apply text-4xl md:text-5xl lg:text-6xl;
+    }
+
+    h2 {
+        @apply text-3xl md:text-4xl lg:text-5xl;
+    }
+
+    h3 {
+        @apply text-2xl md:text-3xl lg:text-4xl;
+    }
+
+    h4 {
+        @apply text-xl md:text-2xl lg:text-3xl;
+    }
+
+    h5 {
+        @apply text-lg md:text-xl lg:text-2xl;
+    }
+
+    h6 {
+        @apply md:text-lg lg:text-xl;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply flex justify-center items-center rounded-lg transition-colors px-5 md:px-6 lg:px-7 py-3 lg:py-4;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
