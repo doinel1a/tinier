@@ -17,7 +17,7 @@ const Header: React.FC = () => {
         >
             <div className='h-full container flex items-center'>
                 <nav className='mr-auto'>
-                    <Logo text='<tininer />' ariaLabel='Homepage' />
+                    <Logo text='<tinier />' ariaLabel='Homepage' />
                 </nav>
                 <ButtonIcon
                     type='button'

@@ -83,8 +83,8 @@ const MetaHead: React.FC<IMetaHeadProps> = ({
                 name='apple-mobile-web-app-title'
                 content={title || defaultMetaTags.title}
             />
-            <meta name='theme-color' content='#0063EB' />
-            <meta name='msapplication-navbutton-color' content='#0063EB' />
+            <meta name='theme-color' content='#475569' />
+            <meta name='msapplication-navbutton-color' content='#475569' />
             <meta
                 name='apple-mobile-web-app-status-bar-style'
                 content='black-translucent'

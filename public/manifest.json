@@ -1,12 +1,12 @@
 {
     "name": "Tinier — Link shortener",
-    "short_name": "Tininer",
+    "short_name": "Tinier",
     "description": "Open source link shortener made with NextJS, TypeScript & Tailwind CSS.",
     "lang": "en-EN",
     "start_url": "/",
     "display": "standalone",
     "orientation": "any",
-    "theme_color": "#0063EB",
+    "theme_color": "#475569",
     "icons": [
         {
             "src": "/favicon/favicon-32.png",
@@ -75,5 +75,5 @@
             "purpose": "maskable"
         }
     ],
-    "background_color": "#404040"
+    "background_color": "#475569"
 }
