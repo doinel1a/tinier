@@ -30,7 +30,7 @@ const ButtonIcon: React.FC<{
             <FontAwesomeIcon
                 icon={icon}
                 className={`
-                    w-6 md:w-7 lg:w-8
+                    w-6 md:w-7 lg:w-8 text-4xl
                     ${iconCss ? iconCss : ''}
                 `}
             />

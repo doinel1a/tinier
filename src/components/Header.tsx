@@ -11,7 +11,7 @@ const Header: React.FC = () => {
     return (
         <header
             className={`
-                w-full h-[var(--header-h)] sticky top-0 flex justify-center px-2 transition-colors
+                w-full h-[var(--header-h)] sticky top-0 z-10 flex justify-center px-2 transition-colors
                 ${isDarkMode ? 'bg-primary-dark' : 'bg-primary-light'}
             `}
         >

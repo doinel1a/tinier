@@ -31,7 +31,7 @@ const ButtonTertiary: React.FC<{
                     icon={icon}
                     className={`
                         w-4 md:w-5 lg:w-6 mr-2
-                        text-blue-600 group-hover:text-blue-800 group-focus:text-blue-800 transition-colors
+                        text-blue-500 group-hover:text-blue-600 group-focus:text-blue-600 transition-colors
                         ${iconCss ? iconCss : ''}
                     `}
                 />
@@ -41,7 +41,7 @@ const ButtonTertiary: React.FC<{
             <Span
                 text={text}
                 customCss={`
-                    font-medium text-blue-600 group-hover:text-blue-800 group-focus:text-blue-800
+                    font-medium text-blue-500 group-hover:text-blue-600 group-focus:text-blue-600
                     ${spanCss ? spanCss : ''}
                 `}
             />
