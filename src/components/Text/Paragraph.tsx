@@ -10,7 +10,7 @@ const Paragraph: React.FC<{ text: string; customCss?: string }> = ({
         <p
             className={`
                 md:text-lg lg:text-xl transition-colors
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''} 
             `}
         >

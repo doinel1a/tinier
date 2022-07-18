@@ -12,16 +12,17 @@ const Header: React.FC = () => {
         <header
             className={`
                 w-full h-[var(--header-h)] sticky top-0 flex justify-center px-2 transition-colors
-                ${isDarkMode ? 'bg-slate-800' : 'bg-slate-400'}
+                ${isDarkMode ? 'bg-primary-dark' : 'bg-primary-light'}
             `}
         >
             <div className='h-full container flex items-center'>
                 <nav className='mr-auto'>
-                    <Logo text='<D1A />' ariaLabel='Homepage' />
+                    <Logo text='<tininer />' ariaLabel='Homepage' />
                 </nav>
                 <ButtonIcon
                     type='button'
                     icon={isDarkMode ? faSun : faMoon}
+                    title='Set theme'
                     ariaLabel={
                         isDarkMode
                             ? 'Set website in light mode'

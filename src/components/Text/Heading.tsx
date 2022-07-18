@@ -10,7 +10,7 @@ const Heading: React.FC<{ type: string; text: string; customCss?: string }> = ({
     return type === 'h1' ? (
         <h1
             className={`
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''}
             `}
         >
@@ -19,7 +19,7 @@ const Heading: React.FC<{ type: string; text: string; customCss?: string }> = ({
     ) : type === 'h2' ? (
         <h2
             className={`
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''}
             `}
         >
@@ -28,7 +28,7 @@ const Heading: React.FC<{ type: string; text: string; customCss?: string }> = ({
     ) : type === 'h3' ? (
         <h3
             className={`
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''}
             `}
         >
@@ -37,7 +37,7 @@ const Heading: React.FC<{ type: string; text: string; customCss?: string }> = ({
     ) : type === 'h4' ? (
         <h4
             className={`
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''}
             `}
         >
@@ -46,7 +46,7 @@ const Heading: React.FC<{ type: string; text: string; customCss?: string }> = ({
     ) : type === 'h5' ? (
         <h5
             className={`
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''}
             `}
         >
@@ -55,7 +55,7 @@ const Heading: React.FC<{ type: string; text: string; customCss?: string }> = ({
     ) : type === 'h6' ? (
         <h6
             className={`
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${customCss ? customCss : ''}
             `}
         >

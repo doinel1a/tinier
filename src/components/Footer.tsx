@@ -9,7 +9,7 @@ const Footer = () => {
         <footer
             className={` 
                 w-full h-[var(--footer-h)] fixed bottom-0 flex justify-center items-center transition-colors  cursor-default
-                ${isDarkMode ? 'bg-b-primary-dark' : 'bg-b-primary-light'}
+                ${isDarkMode ? 'bg-primary-dark' : 'bg-primary-light'}
             `}
         >
             <Paragraph text='© 2022 — D1A' />

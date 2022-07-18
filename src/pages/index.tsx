@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import { nanoid } from 'nanoid';
 import copy from 'copy-to-clipboard';
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faShare, faShuffle } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 
 import { trpc } from '../utils/trpc';
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
     });
 
     const createSlug = trpc.useMutation(['createSlug']);
-    // createSlug.status = 'success';
+
     useEffect(() => {
         setHostname(window.location.origin);
     }, []);
@@ -47,8 +47,8 @@ const Home: NextPage = () => {
             <MetaHead />
             <main
                 className={`
-                    w-full main-h fixed z-0 flex justify-center items-center p-2 sm:p-0 transition-colors 
-                    ${isDarkMode ? 'bg-slate-600' : 'bg-slate-200'}
+                    w-full main-h fixed z-0 flex justify-center items-center p-2 transition-colors 
+                    ${isDarkMode ? 'bg-secondary-dark' : 'bg-secondary-light'}
                 `}
             >
                 {createSlug.status === 'success' ? (
@@ -62,14 +62,11 @@ const Home: NextPage = () => {
                                 <div className='flex flex-col text-white'>
                                     <label
                                         htmlFor='url'
-                                        className={`
-                                        md:text-lg lg:text-xl transition-colors
-                                        ${
+                                        className={`${
                                             isDarkMode
-                                                ? 'text-primary-dark'
-                                                : 'text-primary-light'
-                                        }
-                                    `}
+                                                ? 'text-color-dark'
+                                                : 'text-color-light'
+                                        }`}
                                     >
                                         Your LONG url
                                     </label>
@@ -78,7 +75,7 @@ const Home: NextPage = () => {
                                         type='text'
                                         value={`${form.protocol}${form.url}`}
                                         disabled={true}
-                                        className='p-2 text-[#333] rounded-lg bg-gray-100'
+                                        className='rounded-lg'
                                     />
                                 </div>
 
@@ -86,20 +83,15 @@ const Home: NextPage = () => {
                                     <div className='flex justify-between'>
                                         <label
                                             htmlFor='alias'
-                                            className={`
-                                                    md:text-lg lg:text-xl transition-colors
-                                                ${
-                                                    isDarkMode
-                                                        ? 'text-primary-dark'
-                                                        : 'text-primary-light'
-                                                }
-                                            `}
+                                            className={`${
+                                                isDarkMode
+                                                    ? 'text-color-dark'
+                                                    : 'text-color-light'
+                                            }`}
                                         >
                                             Tinier url
                                         </label>
-                                        <label
-                                            className={` mr-12 md:text-lg lg:text-xl text-green-300 `}
-                                        >
+                                        <label className='text-green-300'>
                                             {copied ? 'Copied' : ''}
                                         </label>
                                     </div>
@@ -109,16 +101,27 @@ const Home: NextPage = () => {
                                             type='text'
                                             value={`${hostname}/${form.slug}`}
                                             disabled={true}
-                                            className='w-full p-2 text-[#333] rounded-lg bg-gray-100'
+                                            className='rounded-lg'
                                         />
                                         <ButtonIcon
                                             type='button'
                                             icon={faCopy}
-                                            title='Copy tinier url'
-                                            ariaLabel='Copy tinier url'
+                                            title='Copy url'
+                                            ariaLabel='Copy url'
                                             onClick={() => {
                                                 setCopied(true);
                                                 copy(
+                                                    `${hostname}/${form.slug}`
+                                                );
+                                            }}
+                                        />
+                                        <ButtonIcon
+                                            type='button'
+                                            icon={faShare}
+                                            title='Visit url'
+                                            ariaLabel='Visit url'
+                                            onClick={() => {
+                                                window.open(
                                                     `${hostname}/${form.slug}`
                                                 );
                                             }}
@@ -127,7 +130,7 @@ const Home: NextPage = () => {
                                 </div>
                             </div>
 
-                            <div className='h-14 flex justify-center'>
+                            <div className='flex justify-center'>
                                 <ButtonPrimary
                                     type='button'
                                     text='Reset'
@@ -158,14 +161,11 @@ const Home: NextPage = () => {
                                 <div className='flex flex-col'>
                                     <label
                                         htmlFor='url'
-                                        className={`
-                                        md:text-lg lg:text-xl transition-colors
-                                        ${
+                                        className={`${
                                             isDarkMode
-                                                ? 'text-primary-dark'
-                                                : 'text-primary-light'
-                                        }
-                                    `}
+                                                ? 'text-color-dark'
+                                                : 'text-color-light'
+                                        }`}
                                     >
                                         Enter a LONG url to make tinier
                                     </label>
@@ -180,7 +180,7 @@ const Home: NextPage = () => {
                                             <select
                                                 id='protocol'
                                                 name='protocol'
-                                                className='w-24 h-full cursor-pointer py-0 pl-2 pr-4 border rounded-tl-lg rounded-bl-lg text-gray-500 bg-white outline-none'
+                                                className='w-28 h-full cursor-pointer py-0 pl-2 pr-4 border rounded-tl-lg rounded-bl-lg text-gray-500 bg-white outline-none'
                                                 onChange={(e) =>
                                                     setForm({
                                                         ...form,
@@ -201,7 +201,8 @@ const Home: NextPage = () => {
                                             id='url'
                                             type='text'
                                             placeholder='www.google.com'
-                                            className='w-full ml-24 p-2 text-[#333] rounded-r-lg outline-none'
+                                            autoComplete='off'
+                                            className='ml-28 rounded-r-lg'
                                             onChange={(e) => {
                                                 setForm({
                                                     ...form,
@@ -215,31 +216,26 @@ const Home: NextPage = () => {
                                 <div className='flex flex-col justify-between sm:flex-row gap-y-2'>
                                     <div className='flex flex-col'>
                                         <label
-                                            htmlFor='url-origin'
-                                            className={`
-                                                md:text-lg lg:text-xl transition-colors
-                                                ${
-                                                    isDarkMode
-                                                        ? 'text-primary-dark'
-                                                        : 'text-primary-light'
-                                                }
-                                            `}
+                                            htmlFor='hostname'
+                                            className={`${
+                                                isDarkMode
+                                                    ? 'text-color-dark'
+                                                    : 'text-color-light'
+                                            }`}
                                         >
                                             Hostname
                                         </label>
                                         <input
-                                            id='url-origin'
+                                            id='hostname'
                                             type='text'
                                             placeholder={hostname}
-                                            className={`
-                                                p-2 placeholder-[#333]  bg-gray-300
-                                                ${
-                                                    isMobile
-                                                        ? 'rounded-lg'
-                                                        : 'rounded-l-lg'
-                                                }
-                                            `}
+                                            autoComplete='off'
                                             disabled={true}
+                                            className={`sm:w-48 md:w-60 placeholder-[#333] ${
+                                                isMobile
+                                                    ? 'rounded-lg'
+                                                    : 'rounded-l-lg'
+                                            }`}
                                         />
                                     </div>
                                     <div className='w-full flex flex-col'>
@@ -247,21 +243,18 @@ const Home: NextPage = () => {
                                         form.slug !== '' ? (
                                             <label
                                                 htmlFor='alias'
-                                                className={`md:text-lg lg:text-xl text-red-300`}
+                                                className='text-red-300'
                                             >
                                                 Alias used
                                             </label>
                                         ) : (
                                             <label
                                                 htmlFor='alias'
-                                                className={`
-                                                md:text-lg lg:text-xl transition-colors
-                                                ${
+                                                className={`${
                                                     isDarkMode
-                                                        ? 'text-primary-dark'
-                                                        : 'text-primary-light'
-                                                }
-                                            `}
+                                                        ? 'text-color-dark'
+                                                        : 'text-color-light'
+                                                }`}
                                             >
                                                 Alias
                                             </label>
@@ -271,14 +264,13 @@ const Home: NextPage = () => {
                                                 id='alias'
                                                 type='text'
                                                 value={form.slug}
-                                                className={`
-                                                    w-full p-2 placeholder-[#333] outline-none
-                                                    ${
-                                                        isMobile
-                                                            ? 'rounded-lg'
-                                                            : 'rounded-r-lg'
-                                                    }
-                                                `}
+                                                placeholder='google'
+                                                autoComplete='off'
+                                                className={`${
+                                                    isMobile
+                                                        ? 'rounded-lg'
+                                                        : 'rounded-r-lg'
+                                                }`}
                                                 onChange={(e) => {
                                                     setForm({
                                                         ...form,
@@ -292,7 +284,7 @@ const Home: NextPage = () => {
                                             />
                                             <ButtonIcon
                                                 type='button'
-                                                icon={faArrowsRotate}
+                                                icon={faShuffle}
                                                 title='Random alias'
                                                 ariaLabel='Random alias'
                                                 onClick={() => {
@@ -324,7 +316,7 @@ const Home: NextPage = () => {
                                         form.slug.length === 0 ||
                                         (slugCheck.isFetched &&
                                             slugCheck.data!.used)
-                                            ? 'cursor-not-allowed bg-blue-800'
+                                            ? 'cursor-not-allowed bg-blue-800 opacity-40'
                                             : 'cursor-pointer bg-blue-500 hover:bg-blue-700 focus:bg-blue-700'
                                     }
                                 `}

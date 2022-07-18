@@ -22,7 +22,7 @@ const ButtonIcon: React.FC<{
             aria-label={ariaLabel}
             className={`
                 p-1 rounded-full transition-colors
-                ${isDarkMode ? 'text-primary-dark' : 'text-primary-light'}
+                ${isDarkMode ? 'text-color-dark' : 'text-color-light'}
                 ${stateCss ? stateCss : ''}
             `}
             onClick={onClick}
@@ -30,7 +30,7 @@ const ButtonIcon: React.FC<{
             <FontAwesomeIcon
                 icon={icon}
                 className={`
-                    w-5 md:w-6 lg:w-7
+                    w-6 md:w-7 lg:w-8
                     ${iconCss ? iconCss : ''}
                 `}
             />
