@@ -49,12 +49,10 @@
 }
 
 .main-h {
-    min-height: calc(100vh - (var(--header-h) + var(--footer-h)));
+    min-height: calc(100% - (var(--header-h) + var(--footer-h)));
 }
 
 .glass {
-    width: 30rem;
-    height: 20rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

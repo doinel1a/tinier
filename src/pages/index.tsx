@@ -21,7 +21,7 @@ interface IForm {
 }
 
 const Home: NextPage = () => {
-    const { isDarkMode } = useStateContext();
+    const { isMobile, isDarkMode } = useStateContext();
     const [form, setForm] = useState<IForm>({
         slug: '',
         protocol: 'https://',
@@ -36,13 +36,6 @@ const Home: NextPage = () => {
         refetchOnWindowFocus: false,
     });
 
-    useEffect(() => {
-        console.log(
-            form.url.length === 0 ||
-                (slugCheck.isFetched && slugCheck.data!.used)
-        );
-    }, [form]);
-
     const createSlug = trpc.useMutation(['createSlug']);
     // createSlug.status = 'success';
     useEffect(() => {
@@ -54,113 +47,22 @@ const Home: NextPage = () => {
             <MetaHead />
             <main
                 className={`
-                    w-full main-h z-0 flex lg:justify-center items-center transition-colors 
+                    w-full main-h fixed z-0 flex justify-center items-center p-2 sm:p-0 transition-colors 
                     ${isDarkMode ? 'bg-slate-600' : 'bg-slate-200'}
                 `}
             >
                 {createSlug.status === 'success' ? (
-                    <form
-                        className={`glass transition-colors ${
-                            isDarkMode ? 'glass-dark' : 'glass-light'
-                        }`}
-                    >
-                        <div className='flex flex-col gap-y-6'>
-                            <div className='flex flex-col text-white'>
-                                <label
-                                    htmlFor='url'
-                                    className={`
-                                        md:text-lg lg:text-xl transition-colors
-                                        ${
-                                            isDarkMode
-                                                ? 'text-primary-dark'
-                                                : 'text-primary-light'
-                                        }
-                                    `}
-                                >
-                                    Your LONG url
-                                </label>
-                                <input
-                                    id='url'
-                                    type='text'
-                                    value={`${form.protocol}${form.url}`}
-                                    disabled={true}
-                                    className='p-2 text-[#333] rounded-lg bg-gray-100'
-                                />
-                            </div>
-
-                            <div className='flex flex-col'>
-                                <div className='flex justify-between'>
+                    <section className='container lg:max-w-4xl'>
+                        <form
+                            className={`h-[23rem] glass transition-colors ${
+                                isDarkMode ? 'glass-dark' : 'glass-light'
+                            }`}
+                        >
+                            <div className='flex flex-col gap-y-6'>
+                                <div className='flex flex-col text-white'>
                                     <label
-                                        htmlFor='alias'
+                                        htmlFor='url'
                                         className={`
-                                            md:text-lg lg:text-xl transition-colors
-                                        ${
-                                            isDarkMode
-                                                ? 'text-primary-dark'
-                                                : 'text-primary-light'
-                                        }
-                                    `}
-                                    >
-                                        Tinier url
-                                    </label>
-                                    <label
-                                        className={` mr-12 md:text-lg lg:text-xl text-green-300 `}
-                                    >
-                                        {copied ? 'Copied' : ''}
-                                    </label>
-                                </div>
-                                <div className='flex'>
-                                    <input
-                                        id='alias'
-                                        type='text'
-                                        value={`${hostname}/${form.slug}`}
-                                        disabled={true}
-                                        className='w-[25rem] mr-2 p-2 text-[#333] rounded-lg bg-gray-100'
-                                    />
-                                    <ButtonIcon
-                                        type='button'
-                                        icon={faCopy}
-                                        title='Copy tinier url'
-                                        ariaLabel='Copy tinier url'
-                                        onClick={() => {
-                                            setCopied(true);
-                                            copy(`${hostname}/${form.slug}`);
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='h-14 flex justify-center'>
-                            <ButtonPrimary
-                                type='button'
-                                text='Reset'
-                                onClick={() => {
-                                    createSlug.reset();
-                                    setForm({
-                                        slug: '',
-                                        protocol: 'https://',
-                                        url: '',
-                                    });
-                                }}
-                            />
-                        </div>
-                    </form>
-                ) : (
-                    <form
-                        className={`glass transition-colors ${
-                            isDarkMode ? 'glass-dark' : 'glass-light'
-                        }`}
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            createSlug.mutate({ ...form });
-                        }}
-                    >
-                        <div className='flex flex-col gap-y-6'>
-                            <div className='flex flex-col'>
-                                <label
-                                    htmlFor='url'
-                                    className={`
                                         md:text-lg lg:text-xl transition-colors
                                         ${
                                             isDarkMode
@@ -168,55 +70,94 @@ const Home: NextPage = () => {
                                                 : 'text-primary-light'
                                         }
                                     `}
-                                >
-                                    Enter a LONG url to make tinier
-                                </label>
-                                <div className='relative'>
-                                    <div className='absolute inset-y-0 left-0 flex items-center'>
-                                        <label
-                                            htmlFor='protocol'
-                                            className='sr-only'
-                                        >
-                                            Protocol
-                                        </label>
-                                        <select
-                                            id='protocol'
-                                            name='protocol'
-                                            className='h-full focus:ring-indigo-500 focus:border-indigo-500 py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-sm'
-                                            onChange={(e) =>
-                                                setForm({
-                                                    ...form,
-                                                    protocol: e.target.value,
-                                                })
-                                            }
-                                        >
-                                            <option value='https://'>
-                                                HTTPS
-                                            </option>
-                                            <option value='http://'>
-                                                HTTP
-                                            </option>
-                                        </select>
-                                    </div>
+                                    >
+                                        Your LONG url
+                                    </label>
                                     <input
                                         id='url'
                                         type='text'
-                                        placeholder='www.google.com'
-                                        className='w-full pl-28 p-2 text-[#333] rounded-lg'
-                                        onChange={(e) => {
-                                            setForm({
-                                                ...form,
-                                                url: e.target.value,
-                                            });
-                                        }}
+                                        value={`${form.protocol}${form.url}`}
+                                        disabled={true}
+                                        className='p-2 text-[#333] rounded-lg bg-gray-100'
                                     />
+                                </div>
+
+                                <div className='flex justify-between flex-col'>
+                                    <div className='flex justify-between'>
+                                        <label
+                                            htmlFor='alias'
+                                            className={`
+                                                    md:text-lg lg:text-xl transition-colors
+                                                ${
+                                                    isDarkMode
+                                                        ? 'text-primary-dark'
+                                                        : 'text-primary-light'
+                                                }
+                                            `}
+                                        >
+                                            Tinier url
+                                        </label>
+                                        <label
+                                            className={` mr-12 md:text-lg lg:text-xl text-green-300 `}
+                                        >
+                                            {copied ? 'Copied' : ''}
+                                        </label>
+                                    </div>
+                                    <div className='flex gap-x-3'>
+                                        <input
+                                            id='alias'
+                                            type='text'
+                                            value={`${hostname}/${form.slug}`}
+                                            disabled={true}
+                                            className='w-full p-2 text-[#333] rounded-lg bg-gray-100'
+                                        />
+                                        <ButtonIcon
+                                            type='button'
+                                            icon={faCopy}
+                                            title='Copy tinier url'
+                                            ariaLabel='Copy tinier url'
+                                            onClick={() => {
+                                                setCopied(true);
+                                                copy(
+                                                    `${hostname}/${form.slug}`
+                                                );
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className='flex text-white'>
+                            <div className='h-14 flex justify-center'>
+                                <ButtonPrimary
+                                    type='button'
+                                    text='Reset'
+                                    onClick={() => {
+                                        createSlug.reset();
+                                        setForm({
+                                            slug: '',
+                                            protocol: 'https://',
+                                            url: '',
+                                        });
+                                    }}
+                                />
+                            </div>
+                        </form>
+                    </section>
+                ) : (
+                    <section className='container lg:max-w-4xl'>
+                        <form
+                            className={`h-[23rem] glass transition-colors ${
+                                isDarkMode ? 'glass-dark' : 'glass-light'
+                            }`}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                createSlug.mutate({ ...form });
+                            }}
+                        >
+                            <div className='flex flex-col gap-y-6'>
                                 <div className='flex flex-col'>
                                     <label
-                                        htmlFor='url-origin'
+                                        htmlFor='url'
                                         className={`
                                         md:text-lg lg:text-xl transition-colors
                                         ${
@@ -226,28 +167,55 @@ const Home: NextPage = () => {
                                         }
                                     `}
                                     >
-                                        Customize your link
+                                        Enter a LONG url to make tinier
                                     </label>
-                                    <input
-                                        id='url-origin'
-                                        type='text'
-                                        placeholder={hostname}
-                                        className='p-2 placeholder-[#333] rounded-l-lg bg-gray-300'
-                                        disabled={true}
-                                    />
+                                    <div className='flex relative'>
+                                        <div className='absolute inset-y-0 left-0 flex items-center'>
+                                            <label
+                                                htmlFor='protocol'
+                                                className='sr-only'
+                                            >
+                                                Protocol
+                                            </label>
+                                            <select
+                                                id='protocol'
+                                                name='protocol'
+                                                className='w-24 h-full cursor-pointer py-0 pl-2 pr-4 border rounded-tl-lg rounded-bl-lg text-gray-500 bg-white outline-none'
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        protocol:
+                                                            e.target.value,
+                                                    })
+                                                }
+                                            >
+                                                <option value='https://'>
+                                                    HTTPS
+                                                </option>
+                                                <option value='http://'>
+                                                    HTTP
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <input
+                                            id='url'
+                                            type='text'
+                                            placeholder='www.google.com'
+                                            className='w-full ml-24 p-2 text-[#333] rounded-r-lg outline-none'
+                                            onChange={(e) => {
+                                                setForm({
+                                                    ...form,
+                                                    url: e.target.value,
+                                                });
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className='flex flex-col'>
-                                    {slugCheck.data?.used &&
-                                    form.slug !== '' ? (
+
+                                <div className='flex flex-col justify-between sm:flex-row gap-y-2'>
+                                    <div className='flex flex-col'>
                                         <label
-                                            htmlFor='alias'
-                                            className={`md:text-lg lg:text-xl text-red-300`}
-                                        >
-                                            Alias used
-                                        </label>
-                                    ) : (
-                                        <label
-                                            htmlFor='alias'
+                                            htmlFor='url-origin'
                                             className={`
                                                 md:text-lg lg:text-xl transition-colors
                                                 ${
@@ -257,66 +225,113 @@ const Home: NextPage = () => {
                                                 }
                                             `}
                                         >
-                                            Alias
+                                            Hostname
                                         </label>
-                                    )}
-                                    <div className='flex gap-x-2'>
                                         <input
-                                            id='alias'
+                                            id='url-origin'
                                             type='text'
-                                            value={form.slug}
-                                            className='mr-2 p-2 text-[#333] rounded-r-lg'
-                                            onChange={(e) => {
-                                                setForm({
-                                                    ...form,
-                                                    slug: e.target.value,
-                                                });
-                                                debounce(
-                                                    slugCheck.refetch,
-                                                    100
-                                                );
-                                            }}
+                                            placeholder={hostname}
+                                            className={`
+                                                p-2 placeholder-[#333]  bg-gray-300
+                                                ${
+                                                    isMobile
+                                                        ? 'rounded-lg'
+                                                        : 'rounded-l-lg'
+                                                }
+                                            `}
+                                            disabled={true}
                                         />
-                                        <ButtonIcon
-                                            type='button'
-                                            icon={faArrowsRotate}
-                                            title='Random alias'
-                                            ariaLabel='Random alias'
-                                            onClick={() => {
-                                                const slug = nanoid();
-                                                setForm({
-                                                    ...form,
-                                                    slug,
-                                                });
-                                                slugCheck.refetch();
-                                            }}
-                                        />
+                                    </div>
+                                    <div className='w-full flex flex-col'>
+                                        {slugCheck.data?.used &&
+                                        form.slug !== '' ? (
+                                            <label
+                                                htmlFor='alias'
+                                                className={`md:text-lg lg:text-xl text-red-300`}
+                                            >
+                                                Alias used
+                                            </label>
+                                        ) : (
+                                            <label
+                                                htmlFor='alias'
+                                                className={`
+                                                md:text-lg lg:text-xl transition-colors
+                                                ${
+                                                    isDarkMode
+                                                        ? 'text-primary-dark'
+                                                        : 'text-primary-light'
+                                                }
+                                            `}
+                                            >
+                                                Alias
+                                            </label>
+                                        )}
+                                        <div className='flex justify-between items-center gap-x-3'>
+                                            <input
+                                                id='alias'
+                                                type='text'
+                                                value={form.slug}
+                                                className={`
+                                                    w-full p-2 placeholder-[#333] outline-none
+                                                    ${
+                                                        isMobile
+                                                            ? 'rounded-lg'
+                                                            : 'rounded-r-lg'
+                                                    }
+                                                `}
+                                                onChange={(e) => {
+                                                    setForm({
+                                                        ...form,
+                                                        slug: e.target.value,
+                                                    });
+                                                    debounce(
+                                                        slugCheck.refetch,
+                                                        100
+                                                    );
+                                                }}
+                                            />
+                                            <ButtonIcon
+                                                type='button'
+                                                icon={faArrowsRotate}
+                                                title='Random alias'
+                                                ariaLabel='Random alias'
+                                                onClick={() => {
+                                                    const slug = nanoid();
+                                                    setForm({
+                                                        ...form,
+                                                        slug,
+                                                    });
+                                                    slugCheck.refetch();
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className='h-14 flex justify-end'>
-                            <ButtonPrimary
-                                type='submit'
-                                text='Create'
-                                disabled={
-                                    form.url.length === 0 ||
-                                    (slugCheck.isFetched &&
-                                        slugCheck.data!.used)
-                                }
-                                stateCss={`
+                            <div className='flex justify-end'>
+                                <ButtonPrimary
+                                    type='submit'
+                                    text='Create'
+                                    disabled={
+                                        form.url.length === 0 ||
+                                        (slugCheck.isFetched &&
+                                            slugCheck.data!.used)
+                                    }
+                                    stateCss={`
                                     ${
                                         form.url.length === 0 ||
+                                        form.slug.length === 0 ||
                                         (slugCheck.isFetched &&
                                             slugCheck.data!.used)
                                             ? 'cursor-not-allowed bg-blue-800'
                                             : 'cursor-pointer bg-blue-500 hover:bg-blue-700 focus:bg-blue-700'
                                     }
                                 `}
-                            />
-                        </div>
-                    </form>
+                                />
+                            </div>
+                        </form>
+                    </section>
                 )}
             </main>
         </>
