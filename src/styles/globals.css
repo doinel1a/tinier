@@ -43,6 +43,38 @@
     }
 }
 
+:root {
+    --header-h: 3.5rem;
+    --footer-h: 2.5rem;
+}
+
+.main-h {
+    min-height: calc(100vh - (var(--header-h) + var(--footer-h)));
+}
+
+.glass {
+    width: 30rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 2px solid;
+    border-radius: 0.5rem;
+}
+
+.glass-dark {
+    border-color: #fff;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.glass-light {
+    border-color: #000;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }

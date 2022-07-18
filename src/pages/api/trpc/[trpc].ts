@@ -23,6 +23,7 @@ export const appRouter = trpc
     .mutation('createSlug', {
         input: z.object({
             slug: z.string(),
+            protocol: z.string(),
             url: z.string(),
         }),
         async resolve({ input }) {
@@ -30,7 +31,7 @@ export const appRouter = trpc
                 await prisma.link.create({
                     data: {
                         slug: input.slug,
-                        url: input.url,
+                        url: `${input.protocol}${input.url}`,
                     },
                 });
             } catch (error) {
