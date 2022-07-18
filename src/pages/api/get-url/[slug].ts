@@ -38,5 +38,12 @@ export default async function (
         return;
     }
 
+    response.setHeader('Content-Type', 'application/json');
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader(
+        'Cache-Control',
+        's-maxage=2592000, stale-while-revalidate'
+    );
+
     return response.json(data);
 }

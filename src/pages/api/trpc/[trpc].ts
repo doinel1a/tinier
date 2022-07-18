@@ -30,8 +30,10 @@ export const appRouter = trpc
             try {
                 await prisma.link.create({
                     data: {
-                        slug: input.slug,
-                        url: `${input.protocol}${input.url}`,
+                        slug: input.slug.trim(),
+                        url: `
+                            ${input.protocol}${input.url.trim().toLowerCase()}
+                        `,
                     },
                 });
             } catch (error) {

@@ -29,7 +29,7 @@ const MetaHead: React.FC<IMetaHeadProps> = ({
                 name='description'
                 content={description || defaultMetaTags.description}
             />
-            <meta name='keywords' content='KEYWORDS' />
+            <meta name='keywords' content='Link shortener' />
             <meta
                 name='author'
                 content='Doinel Atanasiu - doinel1atanasiu@gmail.com'
