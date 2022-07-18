@@ -51,6 +51,28 @@ const Home: NextPage = () => {
                     ${isDarkMode ? 'bg-secondary-dark' : 'bg-secondary-light'}
                 `}
             >
+                {isMobile ? (
+                    <>
+                        <div className='light x1'></div>
+                        <div className='light x2'></div>
+                        <div className='light x5'></div>
+                        <div className='light x6'></div>
+                        <div className='light x9'></div>
+                    </>
+                ) : (
+                    <>
+                        {' '}
+                        <div className='light x1'></div>
+                        <div className='light x2'></div>
+                        <div className='light x3'></div>
+                        <div className='light x4'></div>
+                        <div className='light x5'></div>
+                        <div className='light x6'></div>
+                        <div className='light x7'></div>
+                        <div className='light x8'></div>
+                        <div className='light x9'></div>
+                    </>
+                )}
                 {createSlug.status === 'success' ? (
                     <section className='container lg:max-w-4xl'>
                         <form
