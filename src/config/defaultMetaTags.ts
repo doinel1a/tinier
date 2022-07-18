@@ -1,4 +1,4 @@
-export const appHostname = 'https://d1a-template-next-ts.vercel.app';
+export const appHostname = 'https://tinier.vercel.app/';
 
 const defaultMetaTags = {
     name: 'Tininer',
